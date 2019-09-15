@@ -1,0 +1,77 @@
+<app-header></app-header>
+
+<div class="container-wrapper">
+    <div class="container-fluid">
+        <div class="container">
+            <mat-card>
+                <mat-card-title class="d-flex justify-content-center">
+                    Sign Up
+                </mat-card-title>
+                <mat-card-subtitle class="d-flex justify-content-center">
+                    CV Creator
+                </mat-card-subtitle>
+
+                <mat-card-content>
+                    <form (ngSubmit)="onSubmit(authForm)" #authForm="ngForm">
+
+                        <div class="row">
+                            <mat-form-field>
+                                <input matInput ngModel email name="email" type="email" id="email" placeholder="Email"
+                                    autocomplete="email" required>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="row">
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="password" required minlength="6" name="password"
+                                    type="password" id="password" placeholder="Password" autocomplete="password"
+                                    required>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="row">
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="passwordConfirm" minlength="6" name="passwordConfirm"
+                                    type="password" id="PasswordConfirm" placeholder="Confirm Password"
+                                    autocomplete="passwordConfirm" required>
+                            </mat-form-field>
+                        </div>
+
+                        <div [@animEnterLeave] *ngIf="error != null" class="row d-flex justify-content-center">
+                            <div class="error-box">
+                                {{ error }}
+                            </div>
+                        </div>
+
+                        <div [@animEnterLeave] *ngIf="isLoading" class="row d-flex justify-content-center">
+                            <app-spinner-ripple [isActive]="isLoading"></app-spinner-ripple>
+                        </div>
+
+                        <div [@animEnterLeave] *ngIf="!isLoading" class="div">
+                            <div class="row d-flex justify-content-center divider">
+                                <button class="btn-margin" color="primary" mat-raised-button type="submit"
+                                    [disabled]="!authForm.valid || !isPasswordValid()">
+                                    Sign Up</button>
+                            </div>
+
+                            <div class="row d-flex justify-content-center divider">
+                                <span>You have already an account. Login
+                                    <a routerLink="/signin" (click)="onRouterLink()">here</a>.
+                                </span>
+                            </div>
+                        </div>
+
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
+
+<div class="logo-bar">
+    <app-logo-bar></app-logo-bar>
+</div>
+
+<div class="footer">
+    <app-footer></app-footer>
+</div>

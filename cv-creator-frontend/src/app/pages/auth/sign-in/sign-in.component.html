@@ -1,0 +1,70 @@
+<app-header></app-header>
+
+<div class="container-wrapper">
+    <div class="container-fluid">
+        <mat-card>
+            <mat-card-title class="d-flex justify-content-center">
+                Sign In
+            </mat-card-title>
+            <mat-card-subtitle class="d-flex justify-content-center">
+                CV Creator
+            </mat-card-subtitle>
+            <mat-card-content>
+
+                <div class="container">
+                    <form (ngSubmit)="onSubmit(authForm)" #authForm="ngForm">
+                        <div class="row">
+                            <mat-form-field>
+                                <input matInput ngModel class="form-control" required email name="email"
+                                    [disabled]="!isLoginMode" type="email" id="email" placeholder="Email" autocomplete>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="row">
+                            <mat-form-field>
+                                <input matInput ngModel class="form-control" required minlength="6" name="password"
+                                    [disabled]="!isLoginMode" type="password" id="Password" placeholder="Password"
+                                    autocomplete>
+                            </mat-form-field>
+                        </div>
+
+                        <div [@animEnterLeave] *ngIf="error != null" class="row d-flex justify-content-center">
+                            <div class="error-box">
+                                {{ error }}
+                            </div>
+                        </div>
+
+                        <div [@animEnterLeave] *ngIf="isLoading" class="row d-flex justify-content-center">
+                            <app-spinner-ripple [isActive]="isLoading"></app-spinner-ripple>
+                        </div>
+
+                        <div [@animEnterLeave] *ngIf="!isLoading" class="div">
+                            <div class="row d-flex justify-content-center">
+                                <button *ngIf="isLoginMode" color="primary" class="btn-margin" mat-raised-button
+                                    type="submit" [disabled]="!authForm.valid">
+                                    Sign In
+                                </button>
+                            </div>
+
+                            <div class="row d-flex justify-content-center divider">
+                                <span>Don't have an account? Create one
+                                    <a routerLink="/signup" (click)="onRouterLink()">here</a>!
+                                </span>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<div class="logo-bar">
+    <app-logo-bar></app-logo-bar>
+</div>
+
+<div class="footer">
+    <app-footer></app-footer>
+</div>

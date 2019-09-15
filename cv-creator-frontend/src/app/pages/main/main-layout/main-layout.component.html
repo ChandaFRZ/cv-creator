@@ -1,0 +1,12 @@
+<div class="container-fluid">
+    <h1 *ngIf="(address$ | async) != null">{{ (address$ | async).firstName }} {{ (address$ | async).lastName }}</h1>
+    <p *ngIf="(modifiedDate$ | async) != null" class="d-flex justify-content-center">
+        last update: {{ (modifiedDate$ | async | date:'dd-MM-yyyy h:mm') }}
+    </p>
+    <app-address-box class="row"></app-address-box>
+    <app-image-box class="row"></app-image-box>
+    <app-progression-box [dragDisabled]="true" [editDisabled]="true" class="row"></app-progression-box>
+    <app-experience-box [dragDisabled]="true" [editDisabled]="true" class="row"></app-experience-box>
+    <app-knowledge-box [dragDisabled]="true" [editDisabled]="true" class="row"></app-knowledge-box>
+    <app-hobby-box [dragDisabled]="true" [editDisabled]="true" class="row"></app-hobby-box>
+</div>

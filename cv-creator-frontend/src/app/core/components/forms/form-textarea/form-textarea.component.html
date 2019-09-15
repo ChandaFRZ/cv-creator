@@ -1,0 +1,22 @@
+<div class="text-container">
+    <p [@animationEnterTranslateLeft] *ngIf="isEditDisabled" [ngClass]="{'text-bold': bold}">{{ content }}</p>
+</div>
+
+<div *ngIf="!isEditDisabled">
+    <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+        <div class="textarea-container">
+            <textarea name="content" autosize [placeholder]="placeholder" required (blur)="onBlur()"
+                (input)="onChange(content)" (focus)="onFocus()" [(ngModel)]="content" autocomplete="off"
+                [tabindex]="tabindex ? 1 : 0" required>
+            </textarea>
+            <button *ngIf="initContent !== content" mat-icon-button [@animationEnterTranslateLeft]
+                [disabled]="content == ''" type="submit">
+                <mat-icon [ngClass]="{'button-active': content != ''}">sync</mat-icon>
+            </button>
+            <button *ngIf="!isDeleteButtonHidden && initContent == content" mat-icon-button
+                [@animationEnterTranslateLeft] [disabled]="content == ''" type="button" (click)="onDelete()">
+                <mat-icon [ngClass]="{'button-delete-active': content != ''}">delete</mat-icon>
+            </button>
+        </div>
+    </form>
+</div>

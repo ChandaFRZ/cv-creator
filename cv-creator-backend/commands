@@ -1,0 +1,15 @@
+## add maven build wrapper
+mvn -N io.takari:maven:wrapper
+
+## build project
+./mvnw package && java -jar target/frz-cv-generator-0.0.1-SNAPSHOT.jar
+
+
+##b build docker
+./mvnw install dockerfile:build
+
+## run
+docker run -p 8080 chandafrz/frz-cv-generator
+
+## push
+./mvnw dockerfile:push

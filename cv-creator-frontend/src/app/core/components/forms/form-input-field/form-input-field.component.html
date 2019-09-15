@@ -1,0 +1,8 @@
+<div class="col col-6 input-container">
+    <label for="{{ placeholder }}" [ngClass]="{'translate': ref.value.length > 0}">{{ placeholder }}</label>
+    <input #ref minlength="{{ minLength }}" [name]="placeholder" [placeholder]="placeholder" [type]="type"
+        (input)="onInput()" class="form-control border margin border-valid" [(ngModel)]="content" [required]="required"
+        [ngClass]="{'input:invalid': multipleErrors || ref.value.length > 0 }" [autocomplete]="autoComplete"
+        [disabled]="disabled">
+    <span class="error">{{ errorMessage | error: minLength }}</span>
+</div>

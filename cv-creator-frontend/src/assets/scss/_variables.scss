@@ -1,0 +1,34 @@
+// background
+$background-style: radial-gradient(circle at 0% 0%, #373b52, #252736 51%, #1d1e26);
+
+// color messeges
+$color-warning: yellow;
+$color-success: green;
+$color-attention: red;
+
+// text
+$text-color: #BFD2FF;
+$text-indent: 10px;
+
+// font
+$font-size-normal: 1rem;
+
+// icon
+$icon-size-normal: 1.4rem;
+
+// input
+$input-background: rgba(57, 63, 84, 0.8);
+$input-background-focus: rgba(255, 255, 255, 0.1);
+
+$input-text-inactive: #7881A1;
+$input-text-active: #BFD2FF;
+$input-text-active-focus:rgba(255, 255, 255, 1);
+
+// transition
+$transition-all: all 0.2s ease;
+
+// container-margin
+$container-margin: 3px;
+
+// border
+$border-radius: 5px;

@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <span>cv-creator-webapp</span>
+    <div *ngIf="(isHandset$ | async) === false" class="action-buttons">
+        <ul class=list-container>
+            <li [@animEnterLeave] *ngIf="isExportButtonEnabled" class="list-element">
+                <app-export-button></app-export-button>
+            </li>
+            <li [@animEnterLeave] class="list-element">
+                <a [routerLink]="['/settings']">
+                    <button mat-icon-button>
+                        <mat-icon>settings</mat-icon>
+                    </button>
+                </a>
+            </li>
+
+            <li [@animEnterLeave] class="list-element">
+                <button mat-icon-button [matMenuTriggerFor]="auth">
+                    <mat-icon>person_outline</mat-icon>
+                </button>
+                <mat-menu #auth="matMenu">
+                    <button mat-menu-item (click)="signOut()">
+                        <mat-icon>exit_to_app</mat-icon>
+                        <span>Sign out</span>
+                    </button>
+                </mat-menu>
+            </li>
+        </ul>
+    </div>
+</mat-toolbar>

@@ -1,0 +1,14 @@
+@import './../../../assets/scss/variables';
+@import './../../../assets/scss/layout-mixins';
+
+:host {
+    @include box-host();
+
+    @include buttons();
+
+    app-form-file-in,
+    button,
+    .buttons {
+        margin: $container-margin;
+    }
+}

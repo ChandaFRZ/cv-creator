@@ -1,0 +1,21 @@
+<div *ngIf="address != null" class="container-fluid">
+    <div class="box">
+        <div class="row">
+            <p class="col">{{ address.firstName }} {{ address.lastName }}</p>
+            <p class="col">{{ address.birthDate }}</p>
+            <p class="col">{{ address.birthLocation }}</p>
+        </div>
+
+        <div class="row">
+            <p class="col">{{ address.street }}</p>
+            <p class="col">{{ address.zip }} {{ address.city }}</p>
+            <p class="col">{{ address.country }}</p>
+        </div>
+
+        <div class="row">
+            <p class="col">{{ address.phone }}</p>
+            <p class="col">{{ address.email }}</p>
+            <p class="col"></p>
+        </div>
+    </div>
+</div>

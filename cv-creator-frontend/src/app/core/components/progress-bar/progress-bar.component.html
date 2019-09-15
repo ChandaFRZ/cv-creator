@@ -1,0 +1,3 @@
+<mat-progress-bar *ngIf="progressionBarService.isEnabled$ | async" color="primary" mode="buffer"
+    [value]="progressionBarService.currentProgressionValue$ | async">
+</mat-progress-bar>

@@ -1,0 +1,49 @@
+<form (ngSubmit)="onPublicPageSubmit(publicPageForm)" #publicPageForm="ngForm">
+    <div class="container-wrapper">
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-center form-group border">
+                <div class="col col-12 input-container">
+                    <label for="publicPage" [ngClass]="{'translate': checkLength(puglicPageRef)}">Public Page</label>
+                    <input #puglicPageRef minlength="4" name="pageTitle" placeholder="Puglic Page" type="text"
+                        class="form-control border margin border-valid" autocomplete="off" [(ngModel)]="pageTitle"
+                        required [ngClass]="{'border-active': checkLength(puglicPageRef)}">
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center sub-container-divide">
+                <button mat-flat-button color="primary" type="submit"
+                    [disabled]="publicPageForm.invalid || pageTitle == initPageTitle">Submit</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="container-wrapper">
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-center form-group border">
+            <app-form-input-field appFormInputField [content]="currentPassword" [placeholder]="'Current Password'"
+                [type]="'password'" (inputEvent)="currentPassword = $event" [minLength]="5" [disabled]="true"
+                (validationEvent)="onValidation($event)" [multipleErrors]="isMultipleError(samePassword)">
+            </app-form-input-field>
+
+            <app-form-input-field appFormInputField [content]="password" [placeholder]="'New Password'"
+                [type]="'password'" (inputEvent)="password = $event" [minLength]="5" [disabled]="true"
+                (validationEvent)=" onValidation($event)" [multipleErrors]="isMultipleError(samePassword)">
+            </app-form-input-field>
+
+            <app-form-input-field appFormInputField [content]="passwordConfirm" [placeholder]="'Confirm Password'"
+                [type]="'password'" (inputEvent)="passwordConfirm = $event" [minLength]="5" [disabled]="true"
+                (validationEvent)="onValidation($event)">
+            </app-form-input-field>
+        </div>
+        <div class="row d-flex justify-content-center sub-container-divide">
+            <div class="container">
+                <div [@animEnterLeave] *ngFor="let error of errorsPassword; trackBy: trackByFn" class="row">
+                    <p class="error">{{ error.message }}</p>
+                </div>
+            </div>
+            <button mat-flat-button color="primary" type="button"
+                [disabled]="errorsPassword.length > 0 || password.length < 5"
+                (click)="onSubmitPassword()">Submit</button>
+        </div>
+    </div>
+</div>

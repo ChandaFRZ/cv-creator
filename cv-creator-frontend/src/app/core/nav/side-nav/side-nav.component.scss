@@ -1,0 +1,32 @@
+@import './../../../../assets/scss/variables';
+
+:host {
+
+    .disabled {
+        pointer-events: none;
+        color: rgba(0, 0, 0, 0.4);
+    }
+
+    .toolbar-title {
+        margin: 0 16px 0 16px;
+    }
+
+    .mat-subheader {
+        font-size: 18px;
+        font-weight: 900;
+    }
+
+    .app-nav-list-icon {
+        margin: 0 12px 0 12px;
+    }
+
+    a {
+        text-decoration: none !important;
+        transition: $transition-all;
+    }
+
+    .active-route {
+        color: red;
+        padding-left: 5px;
+    }
+}

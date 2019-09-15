@@ -1,0 +1,10 @@
+{
+    "scripts": {
+        "compose": "docker-compose up --build",
+        "compose:rebuild": "npm run mvn:install && docker-compose up --build",
+        "compose:delete": "docker-compose rm -v",
+        "mvn:install": "npm run docker:build --prefix ./cv-creator-backend",
+        "rebuild": "docker-compose down && docker rmi redis && docker-compose up --build"
+    },
+    "dependencies": {}
+}

@@ -1,0 +1,13 @@
+<div>
+  <mat-sidenav-container class="sidenav-container" fullscreen>
+    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="isOpened">
+      <app-side-nav [drawer]="drawer"></app-side-nav>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-nav-bar *ngIf="isLoggedIn$ | async" [drawer]="drawer"></app-nav-bar>
+      <app-progress-bar></app-progress-bar>
+      <ng-content></ng-content>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

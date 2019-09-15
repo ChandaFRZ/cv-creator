@@ -1,0 +1,42 @@
+version: "3.6"
+services:
+    app-server:
+        build: ./cv-creator-backend
+        ports:
+            - "8080:8080"
+        depends_on:
+            - database
+        networks:
+            - backend
+            - frontend
+    app-client:
+        build: ./cv-creator-frontend
+        ports:
+            - "4200:4200"
+        depends_on:
+            - app-server
+        networks:
+            - frontend
+    database:
+        image: mysql:5.7
+        container_name: database
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: cvCreatorDatabase
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root
+            MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+            MYSQL_HOST: localhost
+        networks:
+            - backend
+        volumes:
+            - cvCreatorDatabase:/var/lib/mysql
+        command: --default-authentication-plugin=mysql_native_password
+
+volumes:
+    cvCreatorDatabase:
+
+networks:
+    backend:
+    frontend:

@@ -1,0 +1,44 @@
+
+<div class="container-fluid" *ngIf="entities != null">
+    <div [@animEnterLeave] class="box">
+        <div class="row d-flex justify-content-center">
+            <h3>Hobbies</h3>
+        </div>
+        <div cdkDropListGroup class="row d-flex justify-content-center">
+            <div [@animEnterLeave] *ngFor="let entites of entiyCols; index as i; trackBy: trackByFn" cdkDropList
+                id="{{ dropListData[i] }}" [cdkDropListData]="entites" class="drag-list col"
+                [cdkDropListConnectedTo]="dropListConnectors[i]" (cdkDropListDropped)="drop($event)">
+                <div [@animEnterLeave] *ngFor="let entity of entites; index as a;trackBy: trackByFn" cdkDrag
+                    class="drag-box" [cdkDragDisabled]="dragDisabled">
+                    <div class="placeholder" *cdkDragPlaceholder>Test</div>
+                    <app-form-input-field-action [entityId]="entity.id" [content]="entity.name"
+                        [placeholder]="'add Hobby'" (submitEvent)="onSubmit($event)" (focusEvent)="onFocus($event)"
+                        (blurEvent)="onBlur($event)" (changeEvent)="onChange($event)" (deleteEvent)="onDelete($event)"
+                        [isEditDisabled]="editDisabled">
+                    </app-form-input-field-action>
+                </div>
+                <div [@animEnterLeave] *ngIf="entites != null && entites.length < maxRows && !editDisabled"
+                    class="row d-flex justify-content-center">
+                    <button class="btn-margin" color='primary' mat-flat-button (click)="onAddEntity(entites, i)"
+                        type="button">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div *ngIf="entiyCols.length < maxCols && !editDisabled" class="col d-flex justify-content-center">
+                <button mat-flat-button class="btn-margin" color="primary" (click)="onAddCol()" type="button">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div [@animEnterLeave] *ngIf="editDisabled" class="row d-flex justify-content-center">
+            <a><button mat-flat-button class="btn-margin" color="primary" type="button"
+                    routerLinkActive="list-item-active" [routerLink]="['/module/hobby']">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+{
+  "name": "cv-generator-backend",
+  "version": "0.0.1",
+  "scripts": {
+    "docker:build": "mvn clean install -DskipTests && docker build -t cv-generator-backend .",
+    "docker:remove": "docker stop cv-gnerator-backend || true && docker rm cv-gnerator-backend",
+    "docker:run-dev": "docker run -e SPRING_PROFILES_ACTIVE='development' -p 8080:8080 -d --name cv-gnerator-backend cv-generator-backend:latest",
+    "docker:run-prod": "docker run -e SPRING_PROFILES_ACTIVE='production' -p 8080:8080 -d --name cv-gnerator-backend cv-generator-backend:latest",
+    "docker:remrun": "npm run docker:remove && docker run -p 8080:8080 -d --name cv-gnerator-backend cv-generator-backend:latest",
+    "docker:it": "npm run docker:build && npm run docker:run",
+    "heroku:push": "heroku container:push web",
+    "heroku:release": "heroku container:release web",
+    "heroku:it": "npm run heroku:push && npm run heroku:release",
+    "deploy:it": "npm run docker:build && npm run heroku:it"
+  },
+  "private": true
+}

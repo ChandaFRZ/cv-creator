@@ -1,0 +1,7 @@
+@import './../../../assets/scss/layout-mixins';
+
+:host {
+    @include box-host();
+
+    @include buttons();
+}

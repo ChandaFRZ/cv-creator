@@ -1,0 +1,5 @@
+<button mat-flat-button color="primary" (click)="fileInput.click()">
+    <mat-icon>cloud_upload</mat-icon>
+    <input #fileInput class="inputfile" id="file" name="file" #imageInput type="file" accept="image/*"
+        (change)="processFile(imageInput)">
+</button>

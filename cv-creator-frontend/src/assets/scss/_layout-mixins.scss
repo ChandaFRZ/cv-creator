@@ -1,0 +1,350 @@
+@import "variables";
+
+@mixin box {
+  background-color: $theme-color-middle-grey-1;
+}
+
+@mixin content-table {
+  display: flex;
+  justify-content: center;
+
+  table {
+    width: 100%;
+    background-color: red;
+    padding: 20px;
+  }
+
+  td {
+    text-indent: 3em;
+  }
+}
+
+@mixin responive-container {
+
+  .flex-container-column {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .flex-col {
+      min-width: 150px;
+    }
+  }
+
+  .flex-container-row {
+    display: inline-block;
+
+    .flex-row {
+      display: flex;
+    }
+  }
+}
+
+@mixin drag-box {
+  .drag-list {
+    width: 100%;
+    // border: solid 1px #ccc;
+    // min-height: 60px;
+    display: block;
+    // background: white;
+    // border-radius: 4px;
+    overflow: hidden;
+  }
+
+  $border: solid 1px rgba(0, 0, 0, 0.1);
+
+  .drag-box {
+    width: 100%;
+    border: $border;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    // cursor: move;
+  }
+
+  .cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: $border;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+      0 8px 10px 1px rgba(0, 0, 0, 0.14),
+      0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .drag-box:last-child {
+    // border: none;
+  }
+
+  .drag-list.cdk-drop-list-dragging .drag-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .placeholder {
+    background: #ccc;
+    border: dotted 3px #999;
+    min-height: 60px;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+@mixin rotate {
+  @keyframes rotating {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .rotating {
+    animation: rotating 2s linear infinite;
+  }
+}
+
+
+@mixin buttons {
+  ::ng-deep button {
+    overflow: hidden;
+    max-height: 40px;
+    outline: none;
+
+    .mat-button-wrapper {
+      color: $text-color;
+    }
+
+    &.btn-margin {
+      margin: $container-margin !important;
+    }
+  }
+}
+
+@mixin box-host {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  .box {
+    border: 2px solid $input-text-inactive;
+    border-radius: $border-radius;
+    margin-top: 10px !important;
+    padding: 1% !important;
+  }
+}
+
+@mixin date-picker {
+  width: 100% !important;
+
+
+  ::ng-deep mat-form-field {
+
+    width: 100% !important;
+    padding: 20px !important;
+
+
+    .mat-form-field-wrapper {
+      width: 100% !important;
+
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      margin: 0 auto;
+      border-radius: 2px;
+      background: $input-background;
+      border: 2px solid $input-text-active;
+
+      color: yellow !important;
+    }
+  }
+}
+
+@mixin text-container {
+  width: 100%;
+
+  p {
+    margin: $text-indent;
+    transition: $transition-all;
+  }
+}
+
+@mixin textarea-container {
+  .textarea-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    border-radius: 2px;
+    background: $input-background;
+
+    width: 100%;
+    height: 100%;
+  }
+
+  textarea {
+    border-style: none;
+    background: transparent;
+    outline: none;
+    resize: none;
+    padding-left: $text-indent;
+    transition: $transition-all;
+
+    overflow: hidden;
+    margin: 0 auto;
+    display: block;
+    height: auto;
+  }
+
+  .textarea-container textarea {
+    width: 100%;
+    flex-grow: 1;
+    color: $input-text-active;
+    font-size: $font-size-normal;
+    vertical-align: middle;
+
+    &::placeholder,
+    &::-webkit-input-placeholder {
+      color: $input-text-inactive;
+    }
+  }
+
+  textarea:required:focus {
+    background: $input-background-focus;
+    color: $input-text-active-focus;
+    padding-left: $text-indent + 10
+  }
+
+  mat-icon {
+    transition: $transition-all;
+    font-size: $icon-size-normal;
+  }
+
+  .button-active {
+    color: $color-warning;
+  }
+
+  .button-delete-active {
+    color: $color-attention;
+  }
+}
+
+@mixin text-input-field {
+  width: 100%;
+
+  .input-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    border-radius: 2px;
+    background: $input-background;
+  }
+
+  input {
+    border-style: none;
+    background: transparent;
+    outline: none;
+    text-indent: $text-indent;
+    transition: $transition-all;
+  }
+
+  .input-container input {
+    width: 100%;
+    flex-grow: 1;
+    color: $input-text-active;
+    font-size: $font-size-normal;
+    line-height: 40px;
+    vertical-align: middle;
+
+    &::placeholder,
+    &::-webkit-input-placeholder {
+      color: $input-text-inactive;
+    }
+  }
+
+  .text-bold {
+    font-weight: bold;
+  }
+
+  input[type="password"] {
+    -webkit-text-security: disc !important;
+  }
+
+  input:required:focus {
+    background: $input-background-focus;
+    color: $input-text-active-focus;
+    text-indent: $text-indent + 10
+  }
+
+  mat-icon {
+    transition: $transition-all;
+    font-size: $icon-size-normal;
+  }
+
+  .button-active {
+    color: $color-warning;
+  }
+
+  .button-delete-active {
+    color: $color-attention;
+  }
+
+  input:valid {
+
+    &.border-valid {
+      border: 2px solid $input-text-active;
+    }
+  }
+
+  input:invalid {
+
+    &.border-valid {
+      border: 2px solid $color-attention;
+    }
+  }
+
+  $margin: 20px;
+
+  label {
+    position: absolute;
+    color: white !important;
+    transform: translate($margin + 12, $margin + 10);
+    font-size: $font-size-normal + 0.1;
+    opacity: 0;
+    transition: $transition-all;
+    z-index: -1;
+
+    &.translate {
+      transform: translate(22px, -3px) scale(0.8);
+      opacity: 1;
+    }
+  }
+
+  span.error {
+    position: absolute;
+    color: $color-attention;
+    transform: translate($margin + 12, $margin + 43);
+    font-size: $font-size-normal - 0.3;
+  }
+
+  .border {
+    border: 2px solid $input-text-inactive;
+    border-radius: $border-radius;
+  }
+
+  .border-error {
+    border: 2px solid $color-attention;
+  }
+
+  .margin {
+    margin: $margin;
+  }
+}

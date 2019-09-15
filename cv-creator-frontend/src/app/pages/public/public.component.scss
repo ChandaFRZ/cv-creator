@@ -1,0 +1,137 @@
+@import "./../../../assets/scss/layout-mixins";
+@import url('https://fonts.googleapis.com/css?family=Oxygen&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+
+$margin-content: 10px;
+
+:host {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    font-size: 0.7em;
+
+    .top-link {
+        margin: 1cm auto;
+        width: 21cm;
+    }
+
+    #export-content {
+        margin: 1cm auto;
+        width: 21cm;
+        min-height: 29.7cm;
+        // font-family: 'Oxygen', sans-serif;
+        font-family: 'Quicksand', sans-serif;
+
+        .image-background {
+            position: absolute;
+
+            img {
+                width: 21cm;
+            }
+        }
+
+        .image-user {
+            position: absolute;
+            left: 12cm;
+            transform: translateY(-6.5cm);
+
+            img {
+                width: 10cm;
+            }
+        }
+
+        .image-logo {
+            position: absolute;
+            left: 2cm;
+            transform: translateY(-4.1cm);
+
+            img {
+                width: 1.6cm;
+            }
+        }
+
+
+        .divider-cv {
+            height: 1.5cm;
+        }
+
+        .divider-content {
+            height: 0.5cm;
+        }
+
+        .address {
+            max-width: 11cm !important;
+            z-index: 100;
+        }
+
+        .content {
+            @include responive-container;
+
+            width: 100%;
+            min-height: 294px;
+            height: 100%;
+            padding: 2cm;
+            border: 1px #D3D3D3 solid;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+            background-color: #F4F2EF;
+            text-align: left;
+
+            z-index: 10;
+
+            p,
+            h1,
+            h2,
+            h3,
+            a,
+            h4 {
+                color: grey;
+            }
+
+            .header-page {
+                width: 10cm;
+            }
+
+            .box-container {
+                margin: 0.5cm 0 0 0 !important;
+
+                width: 100%;
+                height: 100%;
+
+                .row {
+                    margin: 0;
+                }
+
+                p,
+                h3 {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .year {
+                    width: 2cm;
+                }
+
+                .header {
+                    margin-right: $margin-content;
+                    font-weight: bold;
+                }
+
+                .description {
+                    margin-bottom: $margin-content;
+                }
+
+                .progression .description {
+                    margin-right: $margin-content;
+                }
+
+                .experience {}
+
+                .knowledge {}
+            }
+        }
+    }
+}

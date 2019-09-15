@@ -1,0 +1,42 @@
+@import './theme';
+@import './variables';
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-align: center;
+    color: $text-color;
+}
+
+p,
+label,
+textarea,
+input {
+    padding: 0px;
+    margin: 0px;
+    color: $text-color;
+}
+
+.container,
+.row,
+.col {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 1500px !important;
+}
+
+a {
+    text-decoration: underline !important;
+    color: #6e8bff;
+}
+
+.error-box {
+    background-color: $color-attention;
+    color: white;
+    border-radius: $border-radius;
+    padding: 10px;
+    margin: $container-margin;
+}

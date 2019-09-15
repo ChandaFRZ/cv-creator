@@ -1,0 +1,55 @@
+<div class="col-6">
+    <div class="row d-flex justify-content-center">
+        <h3>User Image</h3>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <p>600px x 400px</p>
+    </div>
+
+    <div class=" row d-flex justify-content-center">
+        <div *ngIf="userImageThumbnail != null">
+            <img [src]="userImageThumbnail.url" alt="user background image">
+        </div>
+    </div>
+
+    <div class="row d-flex justify-content-center">
+        <div class="buttons">
+            <app-form-file-input [type]="1"></app-form-file-input>
+            <button mat-flat-button color="primary" (click)="onDelete()">
+                <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-flat-button color="primary" (click)="onShowDetails(userImage)"
+                [disabled]="userImageThumbnail == null">
+                <mat-icon>zoom_out_map</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="col-6">
+    <div class="row d-flex justify-content-center">
+        <h3>Logo</h3>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <p>500px x 400px</p>
+    </div>
+
+    <div class="row d-flex justify-content-center">
+        <div *ngIf="logoImageThumbnail != null">
+            <img [src]="logoImageThumbnail.url" alt="user background image">
+        </div>
+    </div>
+
+    <div class="row d-flex justify-content-center">
+        <div class="buttons">
+            <app-form-file-input [type]="4"></app-form-file-input>
+            <button mat-flat-button color="primary" (click)="onDelete()">
+                <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-flat-button color="primary" (click)="onShowDetails(logoImage)"
+                [disabled]="logoImageThumbnail == null">
+                <mat-icon>zoom_out_map</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

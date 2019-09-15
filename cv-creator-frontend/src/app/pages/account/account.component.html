@@ -1,0 +1,77 @@
+<div *ngIf="address">
+    <div class="container-wrapper">
+        <div class="container-fluid">
+
+            <div class="row d-flex justify-content-center form-group border">
+                <div class="col col-6">
+                    <app-form-input-field appFormInputField [content]="address.firstName"
+                        [placeholder]="'First Name'" (inputEvent)="address.firstName = $event"
+                        (validationEvent)="onValidation($event)" name="firstName">
+                    </app-form-input-field>
+                </div>
+                <div class="col col-6">
+                    <app-form-input-field appFormInputField [content]="address.lastName" [placeholder]="'Last Name'"
+                        (inputEvent)="address.lastName = $event" (validationEvent)="onValidation($event)">
+                    </app-form-input-field>
+                </div>
+
+                <app-form-input-field appFormInputField [content]="address.birthDate" [placeholder]="'Birth Date'"
+                    (inputEvent)="address.birthDate = $event" (validationEvent)="onValidation($event)">
+                </app-form-input-field>
+
+                <app-form-input-field appFormInputField [content]="address.birthLocation"
+                    [placeholder]="'Birth Location'" (inputEvent)="address.birthLocation = $event"
+                    (validationEvent)="onValidation($event)">
+                </app-form-input-field>
+
+                <!--
+                <mat-form-field class="input-container">
+                    <input matInput [matDatepicker]="picker" placeholder="Birth date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                -->
+            </div>
+
+            <div class="row d-flex justify-content-center form-group border sub-container-divide">
+                <app-form-input-field appFormInputField [content]="address.street" [placeholder]="'Street'"
+                    (inputEvent)="address.street = $event" (validationEvent)="onValidation($event)">
+                </app-form-input-field>
+
+                <div class="col col-6">
+                    <app-form-input-field appFormInputField [content]="address.zip" [placeholder]="'Zip'"
+                        (inputEvent)="address.zip = $event" (validationEvent)="onValidation($event)">
+                    </app-form-input-field>
+                </div>
+
+                <div class="col col-6">
+                    <app-form-input-field appFormInputField [content]="address.city" [placeholder]="'City'"
+                        (inputEvent)="address.city = $event" (validationEvent)="onValidation($event)">
+                    </app-form-input-field>
+                </div>
+
+                <app-form-input-field appFormInputField [content]="address.country" [placeholder]="'country'"
+                    (inputEvent)="address.country = $event" (validationEvent)="onValidation($event)">
+                </app-form-input-field>
+            </div>
+
+            <div class="row d-flex justify-content-center form-group border sub-container-divide">
+                <app-form-input-field appFormInputField [content]="address.phone" [placeholder]="'Phone'"
+                    (inputEvent)="address.phone = $event" (validationEvent)="onValidation($event)" name="phone">
+                </app-form-input-field>
+
+                <app-form-input-field appFormInputField [content]="address.email" [placeholder]="'Email'"
+                    (inputEvent)="address.email = $event" (validationEvent)="onValidation($event)" name="email">
+                </app-form-input-field>
+            </div>
+
+            <div *ngFor="let error of errors">
+                <p>{{ error.id }} {{ error.message }}</p>
+            </div>
+            <div class="row d-flex justify-content-center sub-container-divide">
+                <button mat-flat-button color="primary" type="button" [disabled]="errors.length > 0"
+                    (click)="onSubmit()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

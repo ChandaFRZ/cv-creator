@@ -1,0 +1,151 @@
+<div class="container-fluid">
+    <div class="row">
+        <div [@animEnterLeave] *ngIf="isLoading" class="row d-flex justify-content-center">
+            <app-spinner-ripple [isActive]="isLoading"></app-spinner-ripple>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!isLoggedIn" class="container-fluid top-link">
+    <div class="row d-flex justify-content-center">
+        <h3 class="col-12">Create your own Curriculum Vitae with CV-Creator?
+            <a [routerLink]="['/signin']" routerLinkActive="router-link-active">
+                Sign In</a>
+        </h3>
+        <h4 class="col-12">by Friedrich Chanda Bachinger © 2019</h4>
+    </div>
+</div>
+
+<h4 *ngIf="(modifiedDate | async) != null" class="d-flex justify-content-center">
+    last update: {{ (modifiedDate | async | date:'dd-MM-yyyy h:mm') }}
+</h4>
+
+<div id="export-content">
+
+    <div class="image-background ">
+        <img src="https://s3-cv-creator-bucket.s3.eu-central-1.amazonaws.com/images/backgrounds/cv-creator-background.png"
+            alt="background">
+
+        <div *ngIf="userImage" class="image-user">
+            <img [src]="userImage.url" alt="user image">
+        </div>
+
+        <div *ngIf="logoImage" class="image-logo">
+            <img [src]="logoImage.url" alt="logo image">
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="divider-cv"></div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div [@animEnterLeave] *ngIf="address != null" class="header-page">
+                        <h3>Curriculum Vitae</h3>
+                        <h1>{{ address.firstName }} {{ address.lastName }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-container container address">
+                <div [@animEnterLeave] *ngIf="address != null" class="row">
+                    <div class="col">
+                        <p>{{ address.firstName }} {{ address.lastName }}</p>
+                        <p>{{ address.birthDate }}</p>
+                        <p>{{ address.birthLocation }}</p>
+                    </div>
+
+                    <div class="col">
+                        <p>{{ address.street }} </p>
+                        <p>{{ address.zip }} {{ address.city }}</p>
+                        <p>{{ address.country }}</p>
+                    </div>
+
+                    <div class="col">
+                        <p>{{ address.phone }} </p>
+                        <a href="mailto:{{ address.email }}">{{ address.email }}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider-content"></div>
+
+            <div [@animEnterLeave] *ngIf="progressions != null && progressions.length > 0"
+                class="box-container container">
+                <div class="row d-flex justify-content-center">
+                    <div [@animEnterLeave] *ngFor="let entites of progressions; index as i; trackBy: trackByFn"
+                        class="col col-{{ 12 / progressions.length }}">
+                        <div>
+                            <h4>{{ progressionHeaders[i] }}</h4>
+                        </div>
+                        <div *ngFor="let entity of entites; index as a;trackBy: trackByFn">
+                            <div class="row progression">
+                                <div class="col col-3">
+                                    <p class="year">{{ entity.year }}</p>
+                                </div>
+                                <div class="col col-9">
+                                    <p class="header">{{ entity.header }}</p>
+                                    <p class="description">{{ entity.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div [@animEnterLeave] *ngIf="experiences != null && experiences.length > 0"
+                class="box-container container">
+                <div class="row d-flex justify-content-center">
+                    <h3>Experience</h3>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <div [@animEnterLeave] *ngFor="let entites of experiences; index as i; trackBy: trackByFn"
+                        class="col col-{{ 12 / experiences.length }}">
+                        <h4>{{ experienceHeaders[i] }}</h4>
+                        <div *ngFor="let entity of entites; index as a;trackBy: trackByFn">
+                            <div class="row experience">
+                                <div class="col col-6">
+                                    <p class="header">{{ entity.header }}</p>
+                                </div>
+                                <div class="col col-6">
+                                    <p class="description">{{ entity.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div [@animEnterLeave] *ngIf="knowledges != null && knowledges.length > 0" class="box-container container">
+                <div class="row d-flex justify-content-center">
+                    <div [@animEnterLeave] *ngFor="let entites of knowledges; index as i; trackBy: trackByFn"
+                        class="col col-{{ 12 / knowledges.length }}">
+                        <h4>{{ knowledgeHeaders[i] }}</h4>
+                        <div *ngFor="let entity of entites; index as a;trackBy: trackByFn">
+                            <div class="col col-12 d-flex justify-content-center">
+                                <p>{{ entity.content }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div [@animEnterLeave] *ngIf="hobbies != null && hobbies.length > 0" class="box-container container">
+                <div class="row d-flex justify-content-center">
+                    <h4>Hobbies</h4>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <div [@animEnterLeave] *ngFor="let entites of hobbies; index as i; trackBy: trackByFn"
+                        class="col col-{{ 12 / hobbies.length}}">
+                        <div *ngFor="let entity of entites; index as a;trackBy: trackByFn">
+                            <div class="col col-12 d-flex justify-content-center">
+                                <p>{{ entity.name }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

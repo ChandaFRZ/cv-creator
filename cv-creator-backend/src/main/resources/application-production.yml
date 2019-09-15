@@ -1,0 +1,39 @@
+spring:
+    data:
+        rest:
+            base-api: /api
+    datasource:
+        url: jdbc:mysql://database:3306/cvCreatorDatabase
+        username: root
+        password: root
+    servlet:
+        multipart:
+            max-file-size: 5242880
+            max-request-size: 5242880
+    jpa:
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+    flyway:
+        baseline-on-migrate: true
+cloud:
+    aws:
+        stack:
+            auto: false
+        region:
+            static: eu-central-1
+        credentials:
+            accessKey: asws-access-key
+            secretKey: aws-secret-key
+        bucketName: s3-cv-creator-bucket
+        path:
+            images: bucketname/images
+            image-bucket: bucketname/images/
+jwt:
+    secret: cv-secret-key
+    authorities_key: scopes
+server:
+    port: ${PORT:8080}

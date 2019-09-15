@@ -1,0 +1,243 @@
+image: maven:3.6.1-jdk-8
+
+variables:
+  DOCKER_DRIVER: overlay2
+  IMAGE_MASTER: registry.heroku.com/cv-creator-backend/web
+  IMAGE_STAGING: registry.heroku.com/cv-creator-backend-staging/web
+
+  MAVEN_OPTS: -Dmaven.repo.local=.m2
+  # MAVEN_OPTS: "--batch-mode -Dmaven.repo.local=maven.repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN"
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - maven.repository/
+
+services:
+  - name: docker:dind
+
+stages:
+  - package
+  - test
+  - push
+  - deploy
+  - release
+
+### templates
+.extendHerokuJob:
+  script:
+    - docker login -u "$CI_REGISTRY_USER" --password-stdin="$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker build -t registry.gitlab.com/chandafrz/cv-creator-backend .
+    - docker push registry.gitlab.com/$CI_PROJECT_PATH:latest
+
+### build
+package:dev:
+  stage: package
+  environment:
+    name: dev
+  except:
+    - master
+    - staging
+    - merge_request
+  script:
+    ## currently staging db
+    - mvn -Dspring.profiles.active=staging package -B
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - target/*.jar
+#  tags:
+#    - local
+
+package:staging:
+  stage: package
+  environment:
+    name: staging
+  only:
+    - staging
+  script:
+    - mvn -Dspring.profiles.active=staging package -B
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - target/*.jar
+
+package:master:
+  stage: package
+  environment:
+    name: master
+  only:
+    - master
+  script:
+    - mvn -Dspring.profiles.active=production package -B
+  artifacts:
+    expire_in: 1 month
+    paths:
+      - target/*.jar
+
+### testing
+test:unit-dev:
+  stage: test
+  except:
+    - staging
+    - master
+    - merge_request
+  script:
+    - pwd
+    - mvn clean
+    ## currently staging db
+    - mvn -Dspring.profiles.active=staging compile
+    - mvn -Dspring.profiles.active=staging test
+# tags:
+#    - local
+
+test:unit-staging:
+  stage: test
+  only:
+    - staging
+  script:
+    - pwd
+    - mvn clean
+    - mvn -Dspring.profiles.active=staging compile
+    - mvn -Dspring.profiles.active=staging test
+
+test:unit-master:
+  stage: test
+  only:
+    - master
+  script:
+    - pwd
+    - mvn clean
+    - mvn -Dspring.profiles.active=production compile
+    - mvn -Dspring.profiles.active=production test
+
+# test:style:
+#  stage: test
+#  script:
+#    - mvn clean checkstyle:check -B
+
+# test:sonar:
+#   stage: test
+#  script:
+#    mvn clean verify sonar:sonar
+
+### deploy
+push:gitlab-staging:
+  stage: push
+  image: docker
+  environment:
+    name: staging
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t registry.gitlab.com/chandafrz/cv-creator-backend:staging .
+    - docker push registry.gitlab.com/chandafrz/cv-creator-backend:staging
+  only:
+    - staging
+
+push:gitlab-master:
+  stage: push
+  image: docker
+  environment:
+    name: master
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t registry.gitlab.com/chandafrz/cv-creator-backend .
+    - docker push registry.gitlab.com/chandafrz/cv-creator-backend
+  only:
+    - master
+
+### deploy
+deploy:heroku-staging:
+  stage: deploy
+  image: docker
+  environment:
+    name: staging
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker pull registry.gitlab.com/chandafrz/cv-creator-backend:staging
+    - docker tag registry.gitlab.com/chandafrz/cv-creator-backend:staging $IMAGE_STAGING
+    - docker login --username=_ -p $HEROKU_API_KEY registry.heroku.com
+    - docker push $IMAGE_STAGING
+  only:
+    - staging
+
+deploy:heroku-master:
+  stage: deploy
+  image: docker
+  environment:
+    name: master
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker pull registry.gitlab.com/chandafrz/cv-creator-backend
+    - docker tag registry.gitlab.com/chandafrz/cv-creator-backend $IMAGE_MASTER
+    - docker login --username=_ -p $HEROKU_API_KEY registry.heroku.com
+    - docker push $IMAGE_MASTER
+  only:
+    - master
+
+# deploy:digital-ocean:
+#  stage: deploy
+#  image: docker
+#  variables:
+#    DEPLOY_HOST: 'root@167.99.141.176'
+#    DEPLOY_PATH: 'cv-creator-backend/$SERVICE_NAME'
+#    DIST_FILE: '$SERVICE_NAME-$DISTRIBUTION.jar'
+#    DOCKER_IMAGE_NAME: '$SERVICE_NAME/java'
+#    DOCKER_TLS_CERTDIR: ""
+#  stage: deploy
+#    environment:
+#    name: development
+#  services:
+#    - docker:dind
+#  script:
+#    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+#    - docker pull registry.gitlab.com/chandafrz/cv-creator-backend
+#    - docker tag registry.gitlab.com/chandafrz/cv-creator-backend $IMAGE_MASTER
+#
+#  except:
+#    - master
+#    - staging
+
+### release
+release:heroku-staging:
+  image: node:latest
+  stage: release
+  environment:
+    name: staging
+  services:
+    - docker:dind
+  script:
+    - npm install -g heroku
+    - heroku container:release web --app cv-creator-backend-staging
+  only:
+    - staging
+
+release:heroku-master:
+  image: node:latest
+  stage: release
+  environment:
+    name: master
+  services:
+    - docker:dind
+  extends: .extendHerokuJob
+  script:
+    - npm install -g heroku
+    - heroku container:release web --app cv-creator-backend
+  only:
+    - master

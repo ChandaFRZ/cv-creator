@@ -1,0 +1,11 @@
+<div class="container-fluid">
+    <div class="row d-flex justify-content-center image-container">
+        <div class="col-12 d-flex justify-content-center margin">created with</div>
+        <div *ngFor="let logo of logos" class="col-4 col-sm-3 col-md-2 col-lg-2 col-xl-2">
+            <a href="{{ logo.link }}" target="_blank">
+                <img [src]="url + logo.src" alt="logo-{{ logo.name}}" [matTooltip]="logo.tooltip">
+            </a>
+        </div>
+        <div class="col-12 d-flex justify-content-center margin">by Friedrich Chanda Bachinger © 2019</div>
+    </div>
+</div>
